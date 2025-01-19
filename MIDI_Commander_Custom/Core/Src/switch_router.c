@@ -342,7 +342,43 @@ void handle_switches(void){
 
 	handle_delayed_cmds();
 
+
+	/* CODE BLOCK FOR BANK UP */
+
+	if (port_B_switches_changed & SW_5_Pin) {
+	    port_B_switches_changed &= ~SW_5_Pin;
+
+	    if (!HAL_GPIO_ReadPin(SW_5_GPIO_Port, SW_5_Pin)) {
+	        // Send MIDI CC commands when SW_5 is pressed
+	        sendMIDI_CC(0, 7, 100); // Example: CC 7 (Volume) with value 100 on channel 1
+	        sendMIDI_CC(0, 10, 64); // Example: CC 10 (Pan) with value 64 on channel 1
+	        HAL_GPIO_WritePin(LED_5_GPIO_Port, LED_5_Pin, RESET);
+	    } else {
+	        HAL_GPIO_WritePin(LED_5_GPIO_Port, LED_5_Pin, SET);
+	    }
+	}
+
+
+	/* CODE BLOCK FOR BANK DOWN */
+
+
+	if(port_A_switches_changed & SW_E_Pin){
+		port_A_switches_changed &= ~SW_E_Pin;
+
+		if(!HAL_GPIO_ReadPin(SW_E_GPIO_Port, SW_E_Pin)){
+			// Send MIDI CC commands when SW_5 is pressed
+			sendMIDI_CC(0, 7, 100); // Example: CC 7 (Volume) with value 100 on channel 1
+			sendMIDI_CC(0, 10, 64); // Example: CC 10 (Pan) with value 64 on channel 1
+			HAL_GPIO_WritePin(LED_E_GPIO_Port, LED_E_Pin, RESET);
+		} else {
+			HAL_GPIO_WritePin(LED_E_GPIO_Port, LED_E_Pin, SET);
+		}
+	}
+
+/* OLD CODE BLOCK FOR BANK UP AND DOWN
+ *
 	// The bank change switches
+
 	if(port_A_switches_changed & SW_E_Pin){
 		port_A_switches_changed &= ~SW_E_Pin;
 
@@ -376,5 +412,13 @@ void handle_switches(void){
 			HAL_GPIO_WritePin(LED_5_GPIO_Port, LED_5_Pin, SET);
 		}
 	}
+
+ */
+
+
 }
+
+
+
+
 
