@@ -1,3 +1,6 @@
+# This build is specifically for Ampero 2 Stomp
+Recent changes made is for the bank up and down function
+
 # midi-commander-custom
 Custom Firmware for the MeloAudio Midi Commander
 
